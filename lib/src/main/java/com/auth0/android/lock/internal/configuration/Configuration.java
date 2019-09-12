@@ -35,7 +35,6 @@ import com.auth0.android.lock.utils.CustomField;
 import com.auth0.android.lock.views.AuthConfig;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;

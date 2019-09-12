@@ -84,7 +84,6 @@ public class DatabaseSignUpEvent extends DatabaseEvent {
         if (!rootAttributes.isEmpty()) {
             request.addSignUpParameters(rootAttributes);
         }
-
         return request;
     }
 

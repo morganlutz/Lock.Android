@@ -266,11 +266,6 @@ public class Lock {
             return this;
         }
 
-        public Builder customAttributes(HashMap<String, String> customAttributes) {
-            options.setCustomAttributes(customAttributes);
-            return this;
-        }
-
         /**
          * Whether the LockActivity can be closed when pressing the Back key or not.
          *
@@ -493,6 +488,17 @@ public class Lock {
         public Builder withSignUpFields(List<CustomField> customFields) {
             final List<CustomField> withoutDuplicates = removeDuplicatedKeys(customFields);
             options.setCustomFields(withoutDuplicates);
+            return this;
+        }
+
+        /**
+         * Additional user meta data parameters can be set to use.
+         *
+         * @param authenticationParameters a non-null Map containing the parameters as Key-Values
+         * @return the current builder instance
+         */
+        public Builder userMetaData(HashMap<String, String> userMetaData) {
+            options.setUserMetadata(userMetaData);
             return this;
         }
 
