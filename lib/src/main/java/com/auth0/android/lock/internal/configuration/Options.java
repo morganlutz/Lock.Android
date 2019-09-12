@@ -454,8 +454,8 @@ public class Options implements Parcelable {
         return userMetadata;
     }
 
-    public void setUserMetadata(HashMap<String, String> customAttributes) {
-        this.userMetadata = customAttributes;
+    public void setUserMetadata(HashMap<String, String> userMetadata) {
+        this.userMetadata = userMetadata;
     }
 
     public void setInitialScreen(@InitialScreen int screen) {

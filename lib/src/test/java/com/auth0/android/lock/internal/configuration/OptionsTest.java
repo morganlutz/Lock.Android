@@ -11,6 +11,7 @@ import com.auth0.android.lock.UsernameStyle;
 import com.auth0.android.lock.utils.CustomField;
 import com.auth0.android.lock.utils.CustomField.FieldType;
 
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
@@ -32,6 +34,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.collection.IsMapContaining.hasEntry;
+import static org.hamcrest.collection.IsMapContaining.hasKey;
 import static org.junit.Assert.assertThat;
 
 
@@ -668,6 +671,33 @@ public class OptionsTest {
     }
 
     @Test
+    public void shouldSetUserMetadata() {
+        HashMap<String, String> userMetadata = new HashMap<>();
+        userMetadata.put("key", "value");
+        options.setUserMetadata(userMetadata);
+
+        Parcel parcel = Parcel.obtain();
+        options.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+
+        Options parceledOptions = Options.CREATOR.createFromParcel(parcel);
+        assertThat(parceledOptions.getUserMetadata(), is(equalTo(options.getUserMetadata())));
+    }
+
+    @Test
+    public void shouldGetEmptyUserMetadaIfNotSet() {
+        Parcel parcel = Parcel.obtain();
+        options.writeToParcel(parcel, 0);
+        parcel.setDataPosition(0);
+
+        Options parceledOptions = Options.CREATOR.createFromParcel(parcel);
+        assertThat(options.getUserMetadata(), is(notNullValue()));
+        assertThat(options.getUserMetadata().size(), is(0));
+        assertThat(parceledOptions.getUserMetadata(), is(notNullValue()));
+        assertThat(parceledOptions.getUserMetadata().size(), is(0));
+    }
+
+    @Test
     public void shouldSetDefaultValues() {
         Parcel parcel = Parcel.obtain();
         options.writeToParcel(parcel, 0);
@@ -694,6 +724,7 @@ public class OptionsTest {
         assertThat(options.usernameStyle(), is(equalTo(UsernameStyle.DEFAULT)));
         assertThat(options.getTheme(), is(notNullValue()));
         assertThat(options.getAuthenticationParameters(), is(notNullValue()));
+        assertThat(options.getUserMetadata(), is(notNullValue()));
         assertThat(options.getAuthStyles(), is(notNullValue()));
     }
 

@@ -276,6 +276,21 @@ public class LockActivityTest {
     }
 
     @Test
+    public void shouldCreateDatabaseSignUpEventWithAdditionalUserMetadata() {
+        HashMap<String, String> userMetaData = new HashMap<>();
+        userMetaData.put("hobby", "fishing");
+        when(configuration.loginAfterSignUp()).thenReturn(true);
+        when(options.getUserMetadata()).thenReturn(userMetaData);
+
+        DatabaseSignUpEvent event = mock(DatabaseSignUpEvent.class);
+        when(event.getSignUpRequest(any(AuthenticationAPIClient.class), any(String.class))).thenReturn(signUpRequest);
+        activity.onDatabaseAuthenticationRequest(event);
+
+        verify(options).getUserMetadata();
+        verify(event).setExtraFields(userMetaData);
+    }
+
+    @Test
     public void shouldCallOIDCDatabaseSignInWithCustomAudience() {
         Auth0 account = new Auth0("cliendId", "domain");
         account.setOIDCConformant(true);
