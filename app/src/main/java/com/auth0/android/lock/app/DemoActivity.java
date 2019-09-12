@@ -46,6 +46,7 @@ import com.auth0.android.lock.Lock;
 import com.auth0.android.lock.LockCallback;
 import com.auth0.android.lock.PasswordlessLock;
 import com.auth0.android.lock.UsernameStyle;
+import com.auth0.android.lock.utils.CustomField;
 import com.auth0.android.lock.utils.LockException;
 import com.auth0.android.provider.AuthCallback;
 import com.auth0.android.provider.VoidCallback;
@@ -53,6 +54,7 @@ import com.auth0.android.provider.WebAuthProvider;
 import com.auth0.android.result.Credentials;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DemoActivity extends AppCompatActivity {
@@ -166,6 +168,9 @@ public class DemoActivity extends AppCompatActivity {
 
     private void showClassicLock() {
         final Lock.Builder builder = Lock.newBuilder(getAccount(), callback);
+        final HashMap<String, String> customAttributes = new HashMap<>();
+        customAttributes.put("agreedTOS", "yes");
+        builder.customAttributes(customAttributes);
         builder.withScheme("demo");
         builder.closable(checkboxClosable.isChecked());
         builder.useLabeledSubmitButton(groupSubmitMode.getCheckedRadioButtonId() == R.id.radio_use_label);
@@ -180,6 +185,24 @@ public class DemoActivity extends AppCompatActivity {
         builder.allowLogIn(checkboxScreenLogIn.isChecked());
         builder.allowSignUp(checkboxScreenSignUp.isChecked());
         builder.allowForgotPassword(checkboxScreenReset.isChecked());
+
+        final List<CustomField> signUpFields = new ArrayList<>();
+        signUpFields.add(
+                new CustomField(
+                        R.drawable.icon_profile,
+                        CustomField.FieldType.TYPE_NAME,
+                        "firstName",
+                        R.string.hint_name
+                ));
+        signUpFields.add(
+                new CustomField(
+                        R.drawable.icon_profile,
+                        CustomField.FieldType.TYPE_NAME,
+                        "lastName",
+                        R.string.hint_surname
+
+                ));
+        builder.withSignUpFields(signUpFields);
 
         if (groupInitialScreen.getCheckedRadioButtonId() == R.id.radio_initial_reset) {
             builder.initialScreen(InitialScreen.FORGOT_PASSWORD);

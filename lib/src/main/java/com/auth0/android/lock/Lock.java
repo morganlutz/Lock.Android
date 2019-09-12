@@ -266,6 +266,11 @@ public class Lock {
             return this;
         }
 
+        public Builder customAttributes(HashMap<String, String> customAttributes) {
+            options.setCustomAttributes(customAttributes);
+            return this;
+        }
+
         /**
          * Whether the LockActivity can be closed when pressing the Back key or not.
          *

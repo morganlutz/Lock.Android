@@ -44,11 +44,13 @@ public class DatabaseSignUpEvent extends DatabaseEvent {
     @NonNull
     private String password;
     private Map<String, Object> rootAttributes;
+    private Map<String, Object> userMetaData;
 
     public DatabaseSignUpEvent(@NonNull String email, @NonNull String password, @Nullable String username) {
         super(email, username);
         this.password = password;
         this.rootAttributes = new HashMap<>();
+        this.userMetaData = new HashMap<>();
     }
 
     @NonNull
@@ -66,9 +68,8 @@ public class DatabaseSignUpEvent extends DatabaseEvent {
      * @param customFields user_metadata fields to set
      */
     public void setExtraFields(@NonNull Map<String, String> customFields) {
-        this.rootAttributes.put(KEY_USER_METADATA, customFields);
+        this.userMetaData.putAll(customFields);
     }
-
 
     public SignUpRequest getSignUpRequest(AuthenticationAPIClient apiClient, String connection) {
         SignUpRequest request;
@@ -77,9 +78,13 @@ public class DatabaseSignUpEvent extends DatabaseEvent {
         } else {
             request = apiClient.signUp(getEmail(), getPassword(), connection);
         }
+        if (!userMetaData.isEmpty()) {
+            rootAttributes.put(KEY_USER_METADATA, userMetaData);
+        }
         if (!rootAttributes.isEmpty()) {
             request.addSignUpParameters(rootAttributes);
         }
+
         return request;
     }
 
@@ -89,6 +94,9 @@ public class DatabaseSignUpEvent extends DatabaseEvent {
             request = apiClient.createUser(getEmail(), getPassword(), getUsername(), connection);
         } else {
             request = apiClient.createUser(getEmail(), getPassword(), connection);
+        }
+        if (!userMetaData.isEmpty()) {
+            rootAttributes.put(KEY_USER_METADATA, userMetaData);
         }
         if (!rootAttributes.isEmpty()) {
             request.addParameters(rootAttributes);

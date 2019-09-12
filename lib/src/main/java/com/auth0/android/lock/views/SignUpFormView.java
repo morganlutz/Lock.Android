@@ -45,6 +45,7 @@ import com.auth0.android.lock.utils.CustomField;
 import com.auth0.android.lock.views.interfaces.IdentityListener;
 import com.auth0.android.lock.views.interfaces.LockWidgetForm;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.auth0.android.lock.views.CustomFieldsFormView.setEventRootProfileAttributes;

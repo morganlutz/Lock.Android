@@ -14,4 +14,5 @@
     <string name="hint_country">Country name</string>
     <string name="hint_phone">Phone Number</string>
     <string name="hint_date">Your birthday</string>
-</resources>
+    <string name="com_auth0_client_id">p6WnYfHbJZiBtnIGAx55Yb2PSeL5MJgB</string>
+    <string name="com_auth0_domain">kiva-dev.auth0.com</string></resources>

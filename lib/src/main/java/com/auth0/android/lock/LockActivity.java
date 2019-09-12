@@ -412,7 +412,7 @@ public class LockActivity extends AppCompatActivity implements ActivityCompat.On
             Log.w(TAG, "There is no default Database connection to authenticate with");
             return;
         }
-
+        event.setExtraFields(options.getCustomAttributes());
         AuthenticationAPIClient apiClient = options.getAuthenticationAPIClient();
         final String connection = configuration.getDatabaseConnection().getName();
         lockView.showProgress(true);
