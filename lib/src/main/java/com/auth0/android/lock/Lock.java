@@ -492,9 +492,9 @@ public class Lock {
         }
 
         /**
-         * Additional user meta data parameters can be set to use.
+         * Additional user meta data parameters can be sent during sign up.
          *
-         * @param authenticationParameters a non-null Map containing the parameters as Key-Values
+         * @param userMetaData a non-null Map containing the parameters as Key-Values
          * @return the current builder instance
          */
         public Builder userMetaData(HashMap<String, String> userMetaData) {
